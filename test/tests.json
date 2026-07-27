@@ -1,0 +1,10 @@
+{
+    "analysis": {
+        "input": "analysis-input.txt",
+        "mode": "nya-disam"
+    },
+    "generation": {
+        "input": "generation-input.txt",
+        "mode": "nya-gener"
+    }
+}
