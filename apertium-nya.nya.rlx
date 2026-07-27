@@ -2,19 +2,39 @@
 DELIMITERS = "<.>" ;
 
 # We can define sets for common tag clusters
-# LIST Case = (n s) (n p) ; # A set that matches either a Noun Singular or a Noun Plural
+LIST Case = (n s) (n p) ; # A set that matches either a Noun Singular or a Noun Plural
+
+LIST Nominal = (n) (pro) ; # Nominal items
+
+#LIST Number = (sg) (pl) ; # Number
+
+LIST NounClass = (cl1) (cl3) (cl5) (cl7) (cl9) (cl12) ; # Noun classes
+
+LIST NounAgreementWord = (adj) ; # words that need to agree with nouns
 
 SECTION
 # If there is a singular noun to the right, I cannot be a verb or noun.
-# REMOVE (n) OR (v) IF (1 (n s)) ;
+REMOVE (n) OR (v) IF (1 (n s)) ;
+
+# If I am a verb, adjective, demonstrative, or associative inflected to agree with a certain noun class, select me if the noun or pronoun preceding me is of that class.
+SELECT $$NounClass IF (0 NounAgreementWord) (-1 Nominal + $$NounClass ) ; 
+
+# If I am verb, adjective, demonstrative, or associative inflected to agree with a certain number, select me if the noun or pronoun preceding me is of that number.
+#SELECT $$Number IF (0 NounAgreementWord) (-1 Nominal + $$Number ) ; 
+
+# If I am a noun that can be singular or plural and am followed by a singular adjective, I cannot be plural
+REMOVE (n pl) IF (0 (n sg)) (0 (n pl)) (1 (adj sg)) ;
+
+# If I am a noun that can be singular or plural and am follwed by a plural adjective, I cannot be singular
+REMOVE (n sg) IF (0 (n sg)) (0 (n pl)) (1 (adj pl)) ;
 
 # If there is a conjunction followed by a certain cohort of the same CASE as me, choose me.
-# SELECT $$Case IF (1 (cnjcoo) LINK 1C $$Case) ;
+SELECT $$Case IF (1 (cnjcoo) LINK 1C $$Case) ;
 
 # Resources:
 # http://visl.sdu.dk/cg3.html
 # http://groups.google.com/group/constraint-grammar
 # http://kevindonnelly.org.uk/2010/05/constraint-grammar-tutorial/
-# https://wiki.apertium.org/wiki/Constraint_Grammar
-# https://wiki.apertium.org/wiki/Apertium_and_Constraint_Grammar
+# http://wiki.apertium.org/wiki/Constraint_Grammar
+# http://wiki.apertium.org/wiki/Apertium_and_Constraint_Grammar
 

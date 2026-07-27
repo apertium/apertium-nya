@@ -1,22 +1,87 @@
 Alphabet
  A B Ç D E Ä F G H I J Ž K L M N Ň O Ö P R S Ş T U Ü W Y Ý Z
  a b ç d e ä f g h i j ž k l m n ň o ö p r s ş t u ü w y ý z
- %{A%}:a %>:0  ;
+ %{A%}:a
+ %{I%}:i
+ %{U%}:u
+ %{B%}:b
+ %{D%}:d
+ %{H%}:h
+ %{L%}:d
+! %{M%}:m
+ %{T%}:t
+ %{W%}:w 
+ %{Z%}:z
+ %>:0 ;
 
 Sets
 
-Vowel = A E Ä I O Ö U Ü Y Ý
+Vowel = A E Ä I O Ö U Ü Y Ý 
         a e ä i o ö u ü y ý ;
 
-Rules
+Aspirant = K P T
+           k p t ;
+
+Rules 
 
 "Remove suffix vowel with vowel-ending stem"
 i:0 <=> Vow %{VSUF%}:0 _ [ m | n ] ;
 
+"Turn {L} into l after %{A%}%>. maluwa"
+%{L%}:l <=> %{A%}: %>: _ ;
+
+"Turn {D} into 0 after %{A%}%>. mazira"
+%{D%}:0 <=> %{A%}: %>: _ ;
+
+"Turn {DI} into 0 after %{A%}%>. maso Part II. (Part I is carried out above). Conflict!"
+%{I%}:0 <=> %{A%}: %>: %{D%}: _ ;
+
+"Turn {DZ} into 0 after %{A%}%>. maiko, maina Part II. (Part I is carried out above)."
+%{Z%}:0 <=> %{A%}: %>: %{D%}: _ ;
+
+"Turn {DZA} into 0 after %{A%}%>. manja Part III. (Parts I&II are carried out above)."
+%{A%}:0 <=> %{A%}: %>: %{D%}: %{Z%}: _ ;
+
+"Turn {DZI} into 0 after %{A%}%>. mano Part III. (Parts I&II are carried out above). Conflict!"
+%{I%}:0 <=> %{A%}: %>: %{D%}: %{Z%}: _ ;
+
+"Turn {T} into 0 after Vowel%>. masamba, misinje, masiku"
+%{T%}:0 <=> :Vowel %>: _ ;
+
+"Turn {B} into w after a. mawondo, mawere"
+%{B%}:w <=> :a %>: _ ;
+
+"Turn {W} into y after i. miyendo, miyala"
+%{W%}:y <=> :i %>: _ ;
+
+"Turn {W} into 0 after a. awamuna, awana Part I"
+%{W%}:0 <=> :a %>: _ ;
+
+"Turn {A} into 0 after a. awamuna, awana Part II"
+%{A%}:0 <=> :a %>: %{W%}: _ ;
+
+"Turn {U} into 0 after a. aunthu"
+%{U%}:0 <=> :a %>: _ ;
+
+"Turn {U} into 0 after i. miuzu, miutu"
+%{U%}:0 <=> :i %>: _ ;
+
+"Turn {H} into 0 after %{A%}%>. aspirant followed by {H} in the plural"
+%{H%}:0 <=> %{A%}: %>: :Aspirant _ ;
+
+! "Turn {I} into 0 before a. caka, zaka. Conflict!"
+! %{I%}:0 <=> _ %>: :a ;"
+
+! "Turn {I} into 0 before m. mimoto. Conflict!"
+! %{I%}:0 <=> _ %>: :m ;"
+
+! "Turn {M} into 0 after m. moto"
+! %{M%}:0 <=> :m %>: _ ;
+
 ! Resources:
-! https://wiki.apertium.org/wiki/Starting_a_new_language_with_HFST#Enter_twol
+! http://wiki.apertium.org/wiki/Starting_a_new_language_with_HFST#Enter_twol
 ! https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstHome
 ! https://github.com/hfst/
-! https://wiki.apertium.org/wiki/Twol
-! https://wiki.apertium.org/wiki/Hfst
+! http://wiki.apertium.org/wiki/Twol
+! http://wiki.apertium.org/wiki/Hfst
 

@@ -3,27 +3,58 @@
 Multichar_Symbols
 
 ! Part of speech categories
-%<n%>      ! Noun
-%<v%>      ! Verb
-%<adj%>    ! Adjective
-%<num%>    ! Numeral
-
-%<sent%>   ! Sentence-ending punctuation
-%<guio%>   ! Hyphen
-%<cm%>     ! Comma
-%<apos%>   ! Apostrophe
-%<quot%>   ! Quotation mark
-%<lquot%>  ! Left quotation mark
-%<rquot%>  ! Right quotation mark
-%<lpar%>   ! Left parenthesis
-%<rpar%>   ! Right parenthesis
+%<n%>       ! Noun
+%<adj%>     ! Adjective
+%<prn%>     ! Pronoun
+%<vblex%>   ! Verb
 
 ! Number morphology
-%<pl%>     ! Plural
-%<sg%>     ! Singular
+%<pl%>  ! Plural
+%<sg%>  ! Singular
+
+! Person morphology
+%<p1%>      ! First person
+%<p2%>      ! Second person
+%<p3%>      ! Third person
+
+! Noun-class morphology (and Adj and Pron)
+%<cl1%>     ! Class 1 noun
+%<cl1a%>    ! Class 1a noun (See Meeuwis, 2010)
+%<cl3%>     ! Class 3 noun
+%<cl5%>     ! Class 5 noun
+%<cl7%>     ! Class 7 noun
+%<cl8%>     ! Class 8 noun
+%<cl9%>     ! Class 9 noun
+%<cl9a%>    ! Class 9-6 noun
+%<cl12%>    ! Class 12 noun (derived, from nouns)
+%<cl14%>    ! Class 14 noun
+%<cl15%>    ! Class 15 noun (derived, from verbs)
+%<cl16%>    ! Class 16 noun (derived, from nouns)
+%<cl17%>    ! Class 17 noun (derived, from nouns)
+%<cl18%>    ! Class 18 noun (derived, from nouns)
+
+! Pronoun morpholgy
+%<pers%>   ! Personal pronoun
+%<nom%>   ! Nominal class pronoun
+
+! Verb tense and mood morphology
+%<pres%>    ! Present continuous tense
+%<imp%>     ! Imperative
+%<inf%>     ! Infinitive
 
 ! Other symbols
-%>         ! Morpheme boundary
+%>      ! Morpheme boundary
+%{A%}   ! used for some Class V-VI nouns plural prefix
+%{U%}   ! dropped for some Class I-II nouns plural prefix
+%{B%}   ! used for some Class V-VI nouns
+%{D%}   ! used for some Class V-VI nouns
+%{H%}	! dropped after aspirant in the plural!
+%{L%}
+%{I%}   ! used for some Class V-VI nouns
+! %{M%}	! dropped after m
+%{T%}   ! used for some Class V-VI nouns
+%{Z%}   ! used for some Class V-VI nouns
+%{W%}   ! becomes y in the plural for c3-4 nouns
 
 ! Path features
 %[%-sg%]
@@ -31,75 +62,688 @@ Multichar_Symbols
 %[%-pl%]
 %[%+pl%]
 
+%[%+p1%]   ! First person
+%[%+p2%]   ! Second person
+%[%+p3%]   ! Third person
+%[%+inf%]  ! Infinitive
+%[%+imp%]  ! Imperative
+
+%[%-p1%]   ! First person
+%[%-p2%]   ! Second person
+%[%-p3%]   ! Third person
+%[%-inf%]  ! Infinitive
+%[%-imp%]  ! Imperative
+
+%[%-cl1%]
+%[%-cl3%]
+%[%-cl5%]
+%[%-cl7%]
+%[%-cl9%]
+%[%-cl12%]
+%[%-cl15%]
+%[%-cl16%]
+%[%-cl17%]
+%[%-cl18%]
+
+%[%+cl1%]
+%[%+cl3%]
+%[%+cl5%]
+%[%+cl7%]
+%[%+cl9%]
+%[%+cl12%]
+%[%+cl15%]
+%[%+cl16%]
+%[%+cl17%]
+%[%+cl18%]
+
+%[%+pres%]  ! Present continuous tense
+
+%[%-pres%]  ! Present continuous tense
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!                       M O R P H O T A C T I C S                         !!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 LEXICON Root
+NounPrefix ;
+DerivedNounPrefix ;
+NounRoot ;
+Adjective-Prefix ;
+Pronouns ;
+VerbPersonNum-Prefix ;
 
-!! List lexicons here
-!! Example:
-! NounRoot ;
+LEXICON RegNounInfl
+%<n%>%<sg%>: # ;
+%<n%>%<pl%>:%>s # ;
 
-Numeral ;
-Punctuation ;
+LEXICON COMMON-Suffix
+# ;
 
-! Example noun inflection
-! LEXICON RegNounInfl
-! %<n%>%<sg%>: # ;
-! %<n%>%<pl%>:%>s # ;
+!=============================================================================!
+!                         Noun Morphotactics                                  !
+!=============================================================================!
+LEXICON NounPrefix
+I-II ;
+Ia-II ;
+III-IV ;
+V-VI ;
+VII-VIII ;
+VIIa-VIII ;
+IX-X ;
+IX-VI ;
+XIV-VI ;
+XVIIIa ;
 
+LEXICON DerivedNounPrefix
+XII-XIII ;
+XVI ;
+XVII ;
+XVIII ;
+
+LEXICON I-II
+%[%-sg%]:m%> I-II-Stems ;
+%[%-pl%]:a%> I-II-Stems ;
+
+LEXICON Ia-II
+%[%-sg%]: Ia-II-Stems ;
+%[%-pl%]:a%> Ia-II-Stems ;
+
+LEXICON III-IV
+%[%-sg%]:m III-IV-Stems ;
+%[%-pl%]:m%{I%}%> III-IV-Stems ;
+
+LEXICON V-VI
+%[%-sg%]:%> V-VI-Stems ;
+%[%-pl%]:m%{A%}%> V-VI-Stems ;
+
+LEXICON VII-VIII
+%[%-sg%]:c%{I%}%> VII-VIII-Stems ;
+%[%-pl%]:z%{I%}%> VII-VIII-Stems ;
+
+LEXICON VIIa-VIII
+%[%-sg%]:c%> VIIa-VIII-Stems ;
+%[%-pl%]:z%> VIIa-VIII-Stems ;
+
+LEXICON IX-X
+%[%-sg%]: IX-X-Stems ;
+%[%-pl%]: IX-X-Stems ;
+
+LEXICON IX-VI
+%[%-sg%]: IX-VI-Stems ;
+%[%-pl%]:ma IX-VI-Stems ;
+
+LEXICON XII-XIII
+!%[%-sg%]:kam XII-XIII-Stems ;
+!%[%-pl%]:timi XII-XIII-Stems ;
+%[%-cl12%]%[%-sg%]:ka NounPrefix ;
+%[%-cl12%]%[%-pl%]:ti NounPrefix ;
+
+LEXICON XVI
+!%[%-cl16%]:pa NounPrefix ;
+%[%-cl16%]%[%-sg%]:pa NounPrefix ;
+%[%-cl16%]%[%-pl%]:pa NounPrefix ;
+
+LEXICON XVII
+!%[%-cl17%]:ku NounPrefix ;
+%[%-cl17%]%[%-sg%]:ku NounPrefix ;
+%[%-cl17%]%[%-pl%]:ku NounPrefix ;
+
+LEXICON XVIII
+!%[%-cl18%]:mu NounPrefix ;
+%[%-cl18%]%[%-sg%]:mu NounPrefix ;
+%[%-cl18%]%[%-pl%]:mu NounPrefix ;
+
+LEXICON XIV-VI
+%[%-sg%]: XIV-VI-Stems ;
+%[%-pl%]: XIV-VI-Stems ;
+
+LEXICON XVIIIa
+%[%-sg%]: XVIIIa-Stems ;
+%[%-pl%]: XVIIIa-Stems ;
+
+LEXICON I-II-Suffix
+%[%+sg%]%<n%>%<cl1%>%<sg%>: COMMON-Suffix ;
+%[%+pl%]%<n%>%<cl1%>%<pl%>: COMMON-Suffix ; ! Technically class 2
+%[%+cl12%]%[%+sg%]%<n%>%<cl12%>%<sg%>: COMMON-Suffix ;
+%[%+cl12%]%[%+pl%]%<n%>%<cl12%>%<pl%>: COMMON-Suffix ; ! Technically class 13
+%[%+cl16%]%[%+sg%]%<n%>%<cl16%>%<sg%>: COMMON-Suffix ;
+%[%+cl16%]%[%+pl%]%<n%>%<cl16%>%<pl%>: COMMON-Suffix ; ! Technically class 16
+%[%+cl17%]%[%+sg%]%<n%>%<cl17%>%<sg%>: COMMON-Suffix ;
+%[%+cl17%]%[%+pl%]%<n%>%<cl17%>%<pl%>: COMMON-Suffix ; ! Technically class 17
+%[%+cl18%]%[%+sg%]%<n%>%<cl18%>%<sg%>: COMMON-Suffix ;
+%[%+cl18%]%[%+pl%]%<n%>%<cl18%>%<pl%>: COMMON-Suffix ; ! Technically class 18
+
+LEXICON Ia-II-Suffix
+%[%+sg%]%<n%>%<cl1a%>%<sg%>: COMMON-Suffix ;
+%[%+pl%]%<n%>%<cl1a%>%<pl%>: COMMON-Suffix ; ! Technically class 2
+%[%+cl12%]%[%+sg%]%<n%>%<cl12%>%<sg%>: COMMON-Suffix ;
+%[%+cl12%]%[%+pl%]%<n%>%<cl12%>%<pl%>: COMMON-Suffix ; ! Technically class 13
+%[%+cl16%]%[%+sg%]%<n%>%<cl16%>%<sg%>: COMMON-Suffix ;
+%[%+cl16%]%[%+pl%]%<n%>%<cl16%>%<pl%>: COMMON-Suffix ; ! Technically class 16
+%[%+cl17%]%[%+sg%]%<n%>%<cl17%>%<sg%>: COMMON-Suffix ;
+%[%+cl17%]%[%+pl%]%<n%>%<cl17%>%<pl%>: COMMON-Suffix ; ! Technically class 17
+%[%+cl18%]%[%+sg%]%<n%>%<cl18%>%<sg%>: COMMON-Suffix ;
+%[%+cl18%]%[%+pl%]%<n%>%<cl18%>%<pl%>: COMMON-Suffix ; ! Technically class 18
+
+LEXICON III-IV-Suffix
+%[%+sg%]%<n%>%<cl3%>%<sg%>: COMMON-Suffix ;
+%[%+pl%]%<n%>%<cl3%>%<pl%>: COMMON-Suffix ; ! Technically class 4
+%[%+cl12%]%[%+sg%]%<n%>%<cl12%>%<sg%>: COMMON-Suffix ;
+%[%+cl12%]%[%+pl%]%<n%>%<cl12%>%<pl%>: COMMON-Suffix ; ! Technically class 13
+%[%+cl16%]%[%+sg%]%<n%>%<cl16%>%<sg%>: COMMON-Suffix ;
+%[%+cl16%]%[%+pl%]%<n%>%<cl16%>%<pl%>: COMMON-Suffix ; ! Technically class 16
+%[%+cl17%]%[%+sg%]%<n%>%<cl17%>%<sg%>: COMMON-Suffix ;
+%[%+cl17%]%[%+pl%]%<n%>%<cl17%>%<pl%>: COMMON-Suffix ; ! Technically class 17
+%[%+cl18%]%[%+sg%]%<n%>%<cl18%>%<sg%>: COMMON-Suffix ;
+%[%+cl18%]%[%+pl%]%<n%>%<cl18%>%<pl%>: COMMON-Suffix ; ! Technically class 18
+
+LEXICON V-VI-Suffix
+%[%+sg%]%<n%>%<cl5%>%<sg%>: COMMON-Suffix ;
+%[%+pl%]%<n%>%<cl5%>%<pl%>: COMMON-Suffix ; ! Technically class 6
+%[%+cl12%]%[%+sg%]%<n%>%<cl12%>%<sg%>: COMMON-Suffix ;
+%[%+cl12%]%[%+pl%]%<n%>%<cl12%>%<pl%>: COMMON-Suffix ; ! Technically class 13
+%[%+cl16%]%[%+sg%]%<n%>%<cl16%>%<sg%>: COMMON-Suffix ;
+%[%+cl16%]%[%+pl%]%<n%>%<cl16%>%<pl%>: COMMON-Suffix ; ! Technically class 16
+%[%+cl17%]%[%+sg%]%<n%>%<cl17%>%<sg%>: COMMON-Suffix ;
+%[%+cl17%]%[%+pl%]%<n%>%<cl17%>%<pl%>: COMMON-Suffix ; ! Technically class 17
+%[%+cl18%]%[%+sg%]%<n%>%<cl18%>%<sg%>: COMMON-Suffix ;
+%[%+cl18%]%[%+pl%]%<n%>%<cl18%>%<pl%>: COMMON-Suffix ; ! Technically class 18
+
+LEXICON VII-VIII-Suffix
+%[%+sg%]%<n%>%<cl7%>%<sg%>: COMMON-Suffix ;
+%[%+pl%]%<n%>%<cl7%>%<pl%>: COMMON-Suffix ; ! Technically class 8
+%[%+cl12%]%[%+sg%]%<n%>%<cl12%>%<sg%>: COMMON-Suffix ;
+%[%+cl12%]%[%+pl%]%<n%>%<cl12%>%<pl%>: COMMON-Suffix ; ! Technically class 13
+%[%+cl16%]%[%+sg%]%<n%>%<cl16%>%<sg%>: COMMON-Suffix ;
+%[%+cl16%]%[%+pl%]%<n%>%<cl16%>%<pl%>: COMMON-Suffix ; ! Technically class 16
+%[%+cl17%]%[%+sg%]%<n%>%<cl17%>%<sg%>: COMMON-Suffix ;
+%[%+cl17%]%[%+pl%]%<n%>%<cl17%>%<pl%>: COMMON-Suffix ; ! Technically class 17
+%[%+cl18%]%[%+sg%]%<n%>%<cl18%>%<sg%>: COMMON-Suffix ;
+%[%+cl18%]%[%+pl%]%<n%>%<cl18%>%<pl%>: COMMON-Suffix ; ! Technically class 18
+
+LEXICON IX-X-Suffix
+%[%+sg%]%<n%>%<cl9%>%<sg%>: COMMON-Suffix ;
+%[%+pl%]%<n%>%<cl9%>%<pl%>: COMMON-Suffix ; ! Technically class 10
+%[%+cl12%]%[%+sg%]%<n%>%<cl12%>%<sg%>: COMMON-Suffix ;
+%[%+cl12%]%[%+pl%]%<n%>%<cl12%>%<pl%>: COMMON-Suffix ; ! Technically class 13
+%[%+cl16%]%[%+sg%]%<n%>%<cl16%>%<sg%>: COMMON-Suffix ;
+%[%+cl16%]%[%+pl%]%<n%>%<cl16%>%<pl%>: COMMON-Suffix ; ! Technically class 16
+%[%+cl17%]%[%+sg%]%<n%>%<cl17%>%<sg%>: COMMON-Suffix ;
+%[%+cl17%]%[%+pl%]%<n%>%<cl17%>%<pl%>: COMMON-Suffix ; ! Technically class 17
+%[%+cl18%]%[%+sg%]%<n%>%<cl18%>%<sg%>: COMMON-Suffix ;
+%[%+cl18%]%[%+pl%]%<n%>%<cl18%>%<pl%>: COMMON-Suffix ; ! Technically class 18
+
+LEXICON IX-VI-Suffix
+%[%+sg%]%<n%>%<cl9a%>%<sg%>: COMMON-Suffix ;
+%[%+pl%]%<n%>%<cl9a%>%<pl%>: COMMON-Suffix ; ! Technically class 6
+%[%+cl12%]%[%+sg%]%<n%>%<cl12%>%<sg%>: COMMON-Suffix ;
+%[%+cl12%]%[%+pl%]%<n%>%<cl12%>%<pl%>: COMMON-Suffix ; ! Technically class 13
+%[%+cl16%]%[%+sg%]%<n%>%<cl16%>%<sg%>: COMMON-Suffix ;
+%[%+cl16%]%[%+pl%]%<n%>%<cl16%>%<pl%>: COMMON-Suffix ; ! Technically class 16
+%[%+cl17%]%[%+sg%]%<n%>%<cl17%>%<sg%>: COMMON-Suffix ;
+%[%+cl17%]%[%+pl%]%<n%>%<cl17%>%<pl%>: COMMON-Suffix ; ! Technically class 17
+%[%+cl18%]%[%+sg%]%<n%>%<cl18%>%<sg%>: COMMON-Suffix ;
+%[%+cl18%]%[%+pl%]%<n%>%<cl18%>%<pl%>: COMMON-Suffix ; ! Technically class 18
+
+!LEXICON XII-XIII-Suffix
+!%[%+sg%]%<n%>%<cl12%>%<sg%>: COMMON-Suffix ;
+!%[%+pl%]%<n%>%<cl12%>%<pl%>: COMMON-Suffix ; ! Technically class 13
+
+LEXICON XIV-VI-Suffix
+%[%+sg%]%<n%>%<cl14%>%<sg%>: COMMON-Suffix ;
+%[%+pl%]%<n%>%<cl14%>%<pl%>: COMMON-Suffix ; ! Technically class 6
+%[%+cl12%]%[%+sg%]%<n%>%<cl12%>%<sg%>: COMMON-Suffix ;
+%[%+cl12%]%[%+pl%]%<n%>%<cl12%>%<pl%>: COMMON-Suffix ; ! Technically class 13
+%[%+cl16%]%[%+sg%]%<n%>%<cl16%>%<sg%>: COMMON-Suffix ;
+%[%+cl16%]%[%+pl%]%<n%>%<cl16%>%<pl%>: COMMON-Suffix ; ! Technically class 16
+%[%+cl17%]%[%+sg%]%<n%>%<cl17%>%<sg%>: COMMON-Suffix ;
+%[%+cl17%]%[%+pl%]%<n%>%<cl17%>%<pl%>: COMMON-Suffix ; ! Technically class 17
+%[%+cl18%]%[%+sg%]%<n%>%<cl18%>%<sg%>: COMMON-Suffix ;
+%[%+cl18%]%[%+pl%]%<n%>%<cl18%>%<pl%>: COMMON-Suffix ; ! Technically class 18
+
+LEXICON XVIIIa-Suffix
+%[%+sg%]%<n%>%<cl18%>%<sg%>: COMMON-Suffix ;
+%[%+pl%]%<n%>%<cl18%>%<pl%>: COMMON-Suffix ; ! Technically class 18
+
+!=============================================================================!
+!                         Adjective Morphotactics                             !
+!=============================================================================!
+LEXICON Adjective-Prefix
+!%[%-sg%]:wam%> Adjective-Stems ; ! default singular
+!%[%-pl%]:aa%> Adjective-Stems ; ! default plural
+%[%-cl1%]%[%-sg%]:wam%> Adjective-Stems ;
+%[%-cl1%]%[%-pl%]:aa%> Adjective-Stems ;
+%[%-cl3%]%[%-sg%]:wau%> Adjective-Stems ;
+%[%-cl3%]%[%-pl%]:yai%> Adjective-Stems ;
+%[%-cl5%]%[%-sg%]:lali%> Adjective-Stems ;
+%[%-cl5%]%[%-pl%]:aa%> Adjective-Stems ;
+%[%-cl7%]%[%-sg%]:caci%> Adjective-Stems ;
+%[%-cl7%]%[%-pl%]:zazi%> Adjective-Stems ;
+%[%-cl9%]%[%-sg%]:yai%> Adjective-Stems ;
+%[%-cl9%]%[%-pl%]:zazi%> Adjective-Stems ;
+%[%-cl12%]%[%-sg%]:kaka%> Adjective-Stems ;
+%[%-cl12%]%[%-pl%]:tati%> Adjective-Stems ;
+%[%-cl15%]:kwaku%> Adjective-Stems ;	! Consider CG rule for cl15 adj followed by vblex inf
+%[%-cl16%]:papa%> Adjective-Stems ;
+%[%-cl17%]:kwaku%> Adjective-Stems ;
+%[%-cl18%]:mwamu%> Adjective-Stems ;
+
+LEXICON Adjective-Var-Suffix
+!%[%+sg%]%<adj%>%<sg%>: COMMON-Suffix ;
+!%[%+pl%]%<adj%>%<pl%>: COMMON-Suffix ;
+%[%+cl1%]%[%+sg%]%<adj%>%<sg%>%<cl1%>: COMMON-Suffix ;
+%[%+cl1%]%[%+pl%]%<adj%>%<pl%>%<cl1%>: COMMON-Suffix ;
+%[%+cl3%]%[%+sg%]%<adj%>%<sg%>%<cl3%>: COMMON-Suffix ;
+%[%+cl3%]%[%+pl%]%<adj%>%<pl%>%<cl3%>: COMMON-Suffix ;
+%[%+cl5%]%[%+sg%]%<adj%>%<sg%>%<cl5%>: COMMON-Suffix ;
+%[%+cl5%]%[%+pl%]%<adj%>%<pl%>%<cl5%>: COMMON-Suffix ;
+%[%+cl7%]%[%+sg%]%<adj%>%<sg%>%<cl7%>: COMMON-Suffix ;
+%[%+cl7%]%[%+pl%]%<adj%>%<pl%>%<cl7%>: COMMON-Suffix ;
+%[%+cl9%]%[%+sg%]%<adj%>%<sg%>%<cl9%>: COMMON-Suffix ;
+%[%+cl9%]%[%+pl%]%<adj%>%<pl%>%<cl9%>: COMMON-Suffix ;
+%[%+cl12%]%[%+sg%]%<adj%>%<sg%>%<cl12%>: COMMON-Suffix ;
+%[%+cl12%]%[%+pl%]%<adj%>%<pl%>%<cl12%>: COMMON-Suffix ;
+%[%+cl15%]%<adj%>%<cl15%>: COMMON-Suffix ;	! Consider CG rule for cl15 adj followed by vblex inf
+%[%+cl16%]%<adj%>%<cl16%>: COMMON-Suffix ;
+%[%+cl17%]%<adj%>%<cl17%>: COMMON-Suffix ;
+%[%+cl18%]%<adj%>%<cl18%>: COMMON-Suffix ;
+
+!=============================================================================!
+!                         Pronoun Morphotactics                               !
+!=============================================================================!
+LEXICON PRON-1sg
+%<prn%>%<pers%>%<p1%>%<sg%>: COMMON-Suffix ;
+
+LEXICON PRON-2sg
+%<prn%>%<pers%>%<p2%>%<sg%>: COMMON-Suffix ;
+
+LEXICON PRON-3sg
+%<prn%>%<pers%>%<p3%>%<sg%>: COMMON-Suffix ;
+
+LEXICON PRON-1pl
+%<prn%>%<pers%>%<p1%>%<pl%>: COMMON-Suffix ;
+
+LEXICON PRON-2pl
+%<prn%>%<pers%>%<p2%>%<pl%>: COMMON-Suffix ;
+
+LEXICON PRON-3pl
+%<prn%>%<pers%>%<p3%>%<pl%>: COMMON-Suffix ;
+
+LEXICON PRON-cl1
+%<prn%>%<nom%>%<cl1%>: COMMON-Suffix ;
+
+LEXICON PRON-cl2
+%<prn%>%<nom%>%<cl2%>: COMMON-Suffix ;
+
+LEXICON PRON-cl3
+%<prn%>%<nom%>%<cl3%>: COMMON-Suffix ;
+
+LEXICON PRON-cl4
+%<prn%>%<nom%>%<cl4%>: COMMON-Suffix ;
+
+LEXICON PRON-cl5
+%<prn%>%<nom%>%<cl5%>: COMMON-Suffix ;
+
+LEXICON PRON-cl6
+%<prn%>%<nom%>%<cl6%>: COMMON-Suffix ;
+
+LEXICON PRON-cl7
+%<prn%>%<nom%>%<cl7%>: COMMON-Suffix ;
+
+LEXICON PRON-cl8
+%<prn%>%<nom%>%<cl8%>: COMMON-Suffix ;
+
+LEXICON PRON-cl9
+%<prn%>%<nom%>%<cl9%>: COMMON-Suffix ;
+
+LEXICON PRON-cl10
+%<prn%>%<nom%>%<cl10%>: COMMON-Suffix ;
+
+LEXICON PRON-cl12
+%<prn%>%<nom%>%<cl12%>: COMMON-Suffix ;
+
+LEXICON PRON-cl13
+%<prn%>%<nom%>%<cl13%>: COMMON-Suffix ;
+
+LEXICON PRON-cl14
+%<prn%>%<nom%>%<cl14%>: COMMON-Suffix ;
+
+LEXICON PRON-cl15
+%<prn%>%<nom%>%<cl15%>: COMMON-Suffix ;
+
+LEXICON PRON-cl16
+%<prn%>%<nom%>%<cl16%>: COMMON-Suffix ;
+
+LEXICON PRON-cl17
+%<prn%>%<nom%>%<cl17%>: COMMON-Suffix ;
+
+LEXICON PRON-cl18
+%<prn%>%<nom%>%<cl18%>: COMMON-Suffix ;
+
+!=============================================================================!
+!                         Verb Morphotactics                                  !
+!=============================================================================!
+LEXICON VerbPersonNum-Prefix
+%[%-p1%]%[%-sg%]:ndi%> VerbFutRefOrStem ;
+%[%-p2%]%[%-sg%]:u%> VerbFutRefOrStem ;
+%[%-p3%]%[%-sg%]:wa%> VerbFutRefOrStem ;
+%[%-p1%]%[%-pl%]:ti%> VerbFutRefOrStem ;
+%[%-p2%]%[%-pl%]:mu%> VerbFutRefOrStem ;
+%[%-p3%]%[%-pl%]:a%> VerbFutRefOrStem ;
+%[%-inf%]:ku%> Verb-Stems ; ! Infinitive form goes straight to stems
+%[%-imp%]: Verb-Stems ; ! Imperative goes straight to stems
+
+LEXICON VerbFutRefOrStem
+Verb-Stems ;
+%[%-pres%]:ku Verb-Stems ;
+
+LEXICON Verb-Suffix
+%<vblex%>:%> Verb-TAM-Suffix ;
+
+LEXICON Verb-TAM-Suffix
+Verb-Present-Suffix ;
+Verb-InfImp-Suffix ;
+
+LEXICON Verb-InfImp-Suffix
+%[%+inf%]%<inf%>: COMMON-Suffix ;
+%[%+imp%]%<imp%>: COMMON-Suffix ;
+
+LEXICON Verb-Present-Suffix
+%[%+p1%]%[%+sg%]%[%+pres%]%<pres%>%<p1%>%<sg%>: COMMON-Suffix ;
+%[%+p2%]%[%+sg%]%[%+pres%]%<pres%>%<p2%>%<sg%>: COMMON-Suffix ;
+%[%+p3%]%[%+sg%]%[%+pres%]%<pres%>%<p3%>%<sg%>: COMMON-Suffix ;
+%[%+p1%]%[%+pl%]%[%+pres%]%<pres%>%<p1%>%<pl%>: COMMON-Suffix ;
+%[%+p2%]%[%+pl%]%[%+pres%]%<pres%>%<p2%>%<pl%>: COMMON-Suffix ;
+%[%+p3%]%[%+pl%]%[%+pres%]%<pres%>%<p3%>%<pl%>: COMMON-Suffix ;
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!                          L E X I C O N                                  !!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!=============================================================================!
+!                               Nouns                                         !
+!=============================================================================!
 
-! Example lexical entries
-! LEXICON NounRoot
-! house:house RegNounInfl ; ! A noun
+LEXICON I-II-Stems
+munthu:%{U%}nthu I-II-Suffix ; ! "Person"
+mkazi:kazi I-II-Suffix ; ! "Woman, wife"
+mwamuna:%{W%}%{A%}muna I-II-Suffix ; ! "Man, husband"
+mwana:%{W%}%{A%}na I-II-Suffix ; ! "Child"
+mnzanga:nzanga I-II-Suffix ; ! "(My) Friend" Paas: mnza- followed by possessive suffix
+mnzako:nzako I-II-Suffix ; ! "(Your) Friend"
+mnzake:nzake I-II-Suffix ; ! "(His/ Her/ Their) Friend"
 
+LEXICON Ia-II-Stems
+mayi:mayi Ia-II-Suffix ; ! "Mother"
+bambo:bambo Ia-II-Suffix ; ! "Father"
+tate:tate Ia-II-Suffix ; ! "Father"
+galu:galu Ia-II-Suffix ; ! "Dog"
 
-LEXICON Numeral
-<[ %0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 ]+> NumInfl ;
+LEXICON III-IV-Stems
+mtengo:tengo III-IV-Suffix ; ! "Tree"
+mtima:tima III-IV-Suffix ; ! "Heart, strength of character"
+msewu:sewu III-IV-Suffix ; ! "Road"
+msana:sana III-IV-Suffix ; ! "Back(body)"
+mwendo:%{W%}endo III-IV-Suffix ; ! "Leg"
+mwala:%{W%}ala III-IV-Suffix ; ! "Stone"
+muzu:%{U%}zu III-IV-Suffix ; ! "Root"
+mnyanga:nyanga III-IV-Suffix ; ! "Horn"
+mcila:cila III-IV-Suffix ; ! "Tail"
+mutu:%{U%}tu III-IV-Suffix ; ! "Head"
+mwezi:%{W%}ezi III-IV-Suffix ; ! "Moon"
+mtsinje:tsinje III-IV-Suffix ; ! "River"
+mcere:cere III-IV-Suffix ; ! "Salt"
+mcenga:cenga III-IV-Suffix ; ! "Sand"
+mtambo:tambo III-IV-Suffix ; ! "Cloud"
 
-LEXICON NumInfl
-%<num%>: # ;
+LEXICON V-VI-Stems
+diso:%{D%}%{I%}so V-VI-Suffix ; ! "Eye"
+dzira:%{D%}zira V-VI-Suffix ; ! "Egg"
+dzino:%{D%}%{Z%}%{I%}no V-VI-Suffix ; ! "Tooth"
+dzanja:%{D%}%{Z%}%{A%}nja V-VI-Suffix ; ! "Hand"
+dzina:%{D%}%{Z%}ina V-VI-Suffix ; ! "Name"
+dziko:%{D%}%{Z%}iko V-VI-Suffix ; ! "Country"
+lirime:lirime V-VI-Suffix ; ! "Tongue"
+tsatsa:tsatsa V-VI-Suffix ; ! "Shelter"
+thengo:thengo V-VI-Suffix ; ! "Thicket"
+bere:%{B%}ere V-VI-Suffix ; ! "Breast"
+tsamba:%{T%}samba V-VI-Suffix ; ! "Leaf"
+khungwa:k%{H%}ungwa V-VI-Suffix ; ! "Bark (tree)"
+duwa:%{L%}uwa V-VI-Suffix ; ! "Flower"
+khungu:k%{H%}ungu V-VI-Suffix ; ! "Skin"
+magazi:gazi V-VI-Suffix ; ! "Blood"
+fupa:fupa V-VI-Suffix ; ! "Bone"
+mafuta:futa V-VI-Suffix ; ! "Fat"
+khutu:k%{H%}utu V-VI-Suffix ; ! "Ear" !!! Requires dropping of the aspirant!?
+kamwa:kamwa V-VI-Suffix ; ! "Mouth"
+phazi:p%{H%}azi V-VI-Suffix ; ! "Foot"
+bondo:%{B%}ondo V-VI-Suffix ; ! "Knee"
+khupe:k%{H%}upe V-VI-Suffix ; ! "Wing"
+phiko:p%{H%}iko V-VI-Suffix ; ! "Wing"
+thumbo:t%{H%}umbo V-VI-Suffix ; ! "Guts" !!! Requires dropping of the aspirant!?
+khosi:k%{H%}osi V-VI-Suffix ; ! "Neck"
+tsiku:%{T%}siku V-VI-Suffix ; ! "Day"
+dzuwa:dzuwa V-VI-Suffix ; ! "Sun"
+madzi:dzi V-VI-Suffix ; ! "Water"
+fumbi:fumbi V-VI-Suffix ; ! "Dust"
+phulusa:phulusa V-VI-Suffix ; ! "Ash" VIa required!
+phiri:p%{H%}iri V-VI-Suffix ; ! "Mountain"
 
+LEXICON VII-VIII-Stems
+cinyama:nyama VII-VIII-Suffix ; ! "Animal"
+cinthu:nthu VII-VIII-Suffix ; ! "Thing, object"
+cipatso:patso VII-VIII-Suffix ; ! "Fruit"
+cingwe:ngwe VII-VIII-Suffix ; ! "Rope"
+cikhadabo:khadabo VII-VIII-Suffix ; ! "Fingernail"
+ciwindi:windi VII-VIII-Suffix ; ! "Liver"
+cipale:pale VII-VIII-Suffix ; ! "Snow" VIIb required!
 
-LEXICON Punctuation
+LEXICON VIIa-VIII-Stems		! also includes, cala: finger
+caka:aka VII-VIII-Suffix ; ! "Year"
+cando:ando IX-X-Suffix ; ! "Ice" VIIb required!
 
-.%<sent%>:. # ;
-..%<sent%>:.. # ;
-...%<sent%>:... # ;
-%;%<sent%>:%; # ;
-%:%<sent%>:%: # ;
-%!%<sent%>:%! # ;
-%-%<guio%>:%- # ;
-%—%<guio%>:%— # ;
-,%<cm%>:, # ;
-%?%<sent%>:%? # ; 
-%'%<apos%>:%' # ;
-%"%<quot%>:%" # ;
-%«%<lquot%>:%« # ;
-%»%<rquot%>:%» # ;
-%”%<rquot%>:%” # ;
-%“%<lquot%>:%“ # ;
-%(%<lpar%>:%( # ;
-%]%<rpar%>:%] # ;
-%[%<lpar%>:%[ # ;
-%)%<rpar%>:%) # ;
-\%<sent%>:\ # ;
-/%<sent%>:/ # ;
+LEXICON IX-X-Stems
+nyama:nyama IX-X-Suffix ; ! "meat"
+nsomba:nsomba IX-X-Suffix ; ! "Fish"
+nsabwe:nsabwe IX-X-Suffix ; ! "Louse"
+mbalame:mbalame IX-X-Suffix ; ! "Bird"
+njoka:njoka IX-X-Suffix ; ! "Snake"
+nyongolosi:nyongolosi IX-X-Suffix ; ! "Worm"
+nkhalango:nkhalango IX-X-Suffix ; ! "Forest"
+ndodo:ndodo IX-X-Suffix ; ! "Stick"
+mbewu:mbewu IX-X-Suffix ; ! "Seed"
+nthenga:nthenga IX-X-Suffix ; ! "Feather"
+tsitsi:tsitsi IX-X-Suffix ; ! "Hair"
+mphuno:mphuno IX-X-Suffix ; ! "Nose"
+mimba:mimba IX-X-Suffix ; ! "Belly"
+mphafa:mphafa IX-X-Suffix ; ! "Liver"
+nyenyezi:nyenyezi IX-X-Suffix ; ! "Star"
+mvula:mvula IX-X-Suffix ; ! "Rain"
+nyanja:nyanja IX-X-Suffix ; ! "Lake"
+nyanja:nyanja IX-X-Suffix ; ! "Sea" !!! nyanja ya mcele multi-word!!!
+nkhungu:nkhungu IX-X-Suffix ; ! "Fog"
+mphepo:mphepo IX-X-Suffix ; ! "Wind"
+moto:moto IX-X-Suffix ; ! "Fire"
 
+LEXICON IX-VI-Stems
+tenuti:tenuti IX-VI-Suffix ; ! "Computer"
+
+!LEXICON XII-XIII-Stems
+!kamtengo:tengo XII-XIII-Suffix ; ! "Small tree"
+
+LEXICON XIV-VI-Stems
+udzu:udzu XIV-VI-Suffix ; ! "Grass"
+usiku:usiku XIV-VI-Suffix ; ! "Night"
+utsi:utsi XIV-VI-Suffix ; ! "Smoke"
+
+LEXICON XVIIIa-Stems
+mlengalenga:mlengalenga XVIIIa-Suffix ; ! "Sky"
+
+LEXICON NounRoot
+house:house RegNounInfl ; ! A noun
+
+!=============================================================================!
+!                               Verbs                                         !
+!=============================================================================!
+LEXICON Verb-Stems
+wona:wona Verb-Suffix ; ! "To see"
+panga:panga Verb-Suffix ; ! "To do"
+kozala:zal Verb-Suffix ; ! Copula, must also analyze as aux verb
+bzala:bzala Verb-Suffix ; ! "To sow, plant"
+limba:limba Verb-Suffix ; ! "To be hard"
+mwa:mwa Verb-Suffix ; ! "To drink"
+dya:dya Verb-Suffix ; ! "To eat"
+luma:luma Verb-Suffix ; ! "To bite"
+yamwa:yamwa Verb-Suffix ; ! "To suck"
+ocha:ocha Verb-Suffix ; ! "To burn" Active
+psa:psa Verb-Suffix ; ! "To burn" Passive
+lavula:lavula Verb-Suffix ; ! "To spit"
+sanza:sanza Verb-Suffix ; ! "To vomit"
+omba:omba Verb-Suffix ; ! "To blow"
+puma:puma Verb-Suffix ; ! "To breathe"
+seka:seka Verb-Suffix ; ! "To laugh"
+ona:ona Verb-Suffix ; ! "To see"
+yang'ana:yang'ana Verb-Suffix ; ! "To see"
+mva:mva Verb-Suffix ; ! "To hear"
+dziwa:dziwa Verb-Suffix ; ! "To know"
+ganiza:ganiza Verb-Suffix ; ! "To think"
+nunkha:nunkha Verb-Suffix ; ! "To smell" Both Active and Passive
+opa:opa Verb-Suffix ; ! "To fear"
+gona:gona Verb-Suffix ; ! "To sleep"
+khala:khala Verb-Suffix ; ! "To live"
+fa:fa Verb-Suffix ; ! "To die"
+mwalira:mwalira Verb-Suffix ; ! "To die"
+pha:pha Verb-Suffix ; ! "To kill"
+menyana:menyana Verb-Suffix ; ! "To fight"
+saka:saka Verb-Suffix ; ! "To hunt"
+menya:menya Verb-Suffix ; ! "To hit"
+dula:dula Verb-Suffix ; ! "To cut"
+gawa:gawa Verb-Suffix ; ! "To split"
+baya:baya Verb-Suffix ; ! "To stab"
+kanda:kanda Verb-Suffix ; ! "To scratch"
+kumba:kumba Verb-Suffix ; ! "To dig"
+sambila:sambila Verb-Suffix ; ! "To swim"
+uluka:uluka Verb-Suffix ; ! "To fly"
+yenda:yenda Verb-Suffix ; ! "To walk"
+bwera:bwera Verb-Suffix ; ! "To come"
+gona:gona Verb-Suffix ; ! "To lie (bed)"
+khala:khala Verb-Suffix ; ! "To sit"
+ima:ima Verb-Suffix ; ! "To stand"
+khota:khota Verb-Suffix ; ! "To turn"
+gwa:gwa Verb-Suffix ; ! "To fall"
+patsa:patsa Verb-Suffix ; ! "To give"
+gwira:gwira Verb-Suffix ; ! "To hold"
+finya:finya Verb-Suffix ; ! "To squeeze"
+sisita:sisita Verb-Suffix ; ! "To rub"
+capa:capa Verb-Suffix ; ! "To wash" Active
+samba:samba Verb-Suffix ; ! "To wash/ bathe" Passive
+pukuta:pukuta Verb-Suffix ; ! "To wipe"
+koka:koka Verb-Suffix ; ! "To pull"
+kankha:kankha Verb-Suffix ; ! "To push"
+ponya:ponya Verb-Suffix ; ! "To throw"
+manga:manga Verb-Suffix ; ! "To tie"
+soka:soka Verb-Suffix ; ! "To sew"
+werenga:werenga Verb-Suffix ; ! "To count"
+nena:nena Verb-Suffix ; ! "To say"
+imba:imba Verb-Suffix ; ! "To sing"
+sewera:sewera Verb-Suffix ; ! "To play"
+yandama:yandama Verb-Suffix ; ! "To float"
+ukha:ukha Verb-Suffix ; ! "To flow"
+uma:uma Verb-Suffix ; ! "To freeze"
+tupa:tupa Verb-Suffix ; ! "To swell"
+fufuma:fufuma Verb-Suffix ; ! "To swell"
+
+! There are 3 Irregular verbs in ciNyanja (Miti): ndi (copula),
+! and 2 "Deficient" verbs: -li & -ti
+! What about "ndidzakhala ndikubwera" = "I will be (in the state of) coming"???
+!kozala:zal Aux-Verb-Suffix ;
+
+!=============================================================================!
+!                           Everything Else                                   !
+!=============================================================================!
+LEXICON Adjective-Stems
+tali:tali Adjective-Var-Suffix ; ! "Tall, long" Pure
+kulu:kulu Adjective-Var-Suffix ; ! "Big" Pure
+mbiri:mbiri Adjective-Var-Suffix ; ! "Many" Enumerative
+na:na Adjective-Var-Suffix ; ! "Some" Pure
+cepa:cepa Adjective-Var-Suffix ; ! "Few" Derived-Verb
+na:na Adjective-Var-Suffix ; ! "Other" Pure
+modzi:modzi Adjective-Var-Suffix ; ! "One" Pure
+wiri:wiri Adjective-Var-Suffix ; ! "Two" Pure
+tatu:tatu Adjective-Var-Suffix ; ! "Three" Pure
+nayi:nayi Adjective-Var-Suffix ; ! "Four" Pure
+sanu:sanu Adjective-Var-Suffix ; ! "Five" Pure
+kumanja:kumanja Adjective-Var-Suffix ; ! "Right" Derived-Noun
+kumanzere:kumanzere Adjective-Var-Suffix ; ! "Left" Derived-Noun
+nenepa:nenepa Adjective-Var-Suffix ; ! "Wide" Derived-Verb
+khatamira:khatamira Adjective-Var-Suffix ; ! "Thick" Derived-Verb
+lemera:lemera Adjective-Var-Suffix ; ! "Heavy" Derived-Verb
+ng'ono:ng'ono Adjective-Var-Suffix ; ! "Small" Pure
+fupi:fupi Adjective-Var-Suffix ; ! "Short" Pure
+cepa:cepa Adjective-Var-Suffix ; ! "Narrow" Derived-Verb
+pyapyala:pyapyala Adjective-Var-Suffix ; ! "Thin" Derived-Verb
+moyo:moyo Adjective-Var-Suffix ; ! "Living" Derived-Noun
+fiira:fiira Adjective-Var-Suffix ; ! "Red" Derived-Verb
+biriwira:biriwira Adjective-Var-Suffix ; ! "Green" Derived-Verb
+cikasu:cikasu Adjective-Var-Suffix ; ! "Yellow" Derived-Noun
+yera:yera Adjective-Var-Suffix ; ! "White" Derived-Verb
+da:da Adjective-Var-Suffix ; ! "Black" Derived-Verb
+tentha:tentha Adjective-Var-Suffix ; ! "Warm" Derived-Verb
+zizira:zizira Adjective-Var-Suffix ; ! "Cold" Derived-Verb
+dzadza:dzadza Adjective-Var-Suffix ; ! "Full" Derived-Verb
+makono:makono Adjective-Var-Suffix ; ! "New" Derived-Noun
+kale:kale Adjective-Var-Suffix ; ! "Old" Derived-Noun
+bwino:bwino Adjective-Var-Suffix ; ! "Good" Derived-Noun
+ipa:ipa Adjective-Var-Suffix ; ! "Bad" Derived-Verb
+vunda:vunda Adjective-Var-Suffix ; ! "Rotten" Derived-Verb
+da:da Adjective-Var-Suffix ; ! "Dirty" Derived-Verb
+ongoka:ongoka Adjective-Var-Suffix ; ! "Straight" Derived-Verb
+zungulira:zungulira Adjective-Var-Suffix ; ! "Round" Derived-Verb
+thwa:thwa Adjective-Var-Suffix ; ! "Sharp (knife)" Derived-Verb
+buntha:buntha Adjective-Var-Suffix ; ! "Blunt (knife) Derived-Verb"
+salala:salala Adjective-Var-Suffix ; ! "Smooth" Derived-Verb
+nyowa:nyowa Adjective-Var-Suffix ; ! "Wet" Derived-Verb
+uma:uma Adjective-Var-Suffix ; ! "Dry" Derived-Verb
+khoza:khoza Adjective-Var-Suffix ; ! "Correct" Derived-Verb
+fupi:fupi Adjective-Var-Suffix ; ! "Near" pa- ku- mu- only, surely?
+tali:tali Adjective-Var-Suffix ; ! "Far" pa- ku- mu- only, surely?
+wisi:wisi Adjective-Var-Suffix ; ! "Fresh" Derived-Noun
+ukali:ukali Adjective-Var-Suffix ; ! "Fierce" Derived-Noun
+muna:muna Adjective-Var-Suffix ; ! "Male" Derived-Noun
+kazi:kazi Adjective-Var-Suffix ; ! "Female" Derived-Noun
+bodza:bodza Adjective-Var-Suffix ; ! "False" Derived-Noun
+kongola:kongola Adjective-Var-Suffix ; ! "Beautiful" Derived-Verb
+vuta:vuta Adjective-Var-Suffix ; ! "Difficult" Derived-Verb
+
+LEXICON Pronouns
+ine:ine PRON-1sg ; ! "I"
+iwe:iwe PRON-2sg ; ! "You"
+iye:iye PRON-3sg ; ! "He/She"
+ife:ife PRON-1pl ; ! "We"
+inu:inu PRON-2pl ; ! "You" (pl)
+iwo:iwo PRON-3pl ; ! "They"
+iye:iye PRON-cl1 ; ! "It"
+iwo:iwo PRON-cl2 ; ! "They"
+iwo:iwo PRON-cl3 ; ! "It"
+iyo:iyo PRON-cl4 ; ! "They"
+ilo:ilo PRON-cl5 ; ! "It"
+iwo:iwo PRON-cl6 ; ! "They"
+ico:ico PRON-cl7 ; ! "It"
+izo:izo PRON-cl8 ; ! "They"
+iyo:iyo PRON-cl9 ; ! "It"
+izo:izo PRON-cl10 ; ! "They"
+iko:iko PRON-cl12 ; ! "It"
+ito:ito PRON-cl13 ; ! "They"
+iwo:iwo PRON-cl14 ; ! "It"
+iko:iko PRON-cl15 ; ! 
+ipo:ipo PRON-cl16 ; ! 
+iko:iko PRON-cl17 ; ! 
+imo:imo PRON-cl18 ; ! 
 
 ! Resources:
-! https://wiki.apertium.org/wiki/Starting_a_new_language_with_HFST#Lexicon
-! https://wiki.apertium.org/wiki/List_of_symbols
-! https://wiki.apertium.org/wiki/Lttoolbox_and_lexc
-! https://wiki.apertium.org/wiki/Apertium-specific_conventions_for_lexc
+! http://wiki.apertium.org/wiki/Starting_a_new_language_with_HFST#Lexicon
+! http://wiki.apertium.org/wiki/Lttoolbox_and_lexc
+! http://wiki.apertium.org/wiki/Apertium-specific_conventions_for_lexc
 ! https://kitwiki.csc.fi/twiki/bin/view/KitWiki/HfstHome
 ! https://github.com/hfst/
 ! http://www.cis.upenn.edu/~cis639/docs/lexc.html
-! https://wiki.apertium.org/wiki/Hfst
+! http://wiki.apertium.org/wiki/Hfst
 
