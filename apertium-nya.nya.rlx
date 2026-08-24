@@ -8,7 +8,7 @@ LIST Nominal = (n) (pro) ; # Nominal items
 
 #LIST Number = (sg) (pl) ; # Number
 
-LIST NounClass = (cl1) (cl3) (cl5) (cl7) (cl9) (cl12) ; # Noun classes
+LIST NounClass = (cl1) (cl1a) (cl3) (cl5) (cl7) (cl9) (cl9a) (cl12) (cl14) (cl15) (inf) (cl16) (cl17) (cl18) ; # Noun classes
 
 LIST NounAgreementWord = (adj) ; # words that need to agree with nouns
 

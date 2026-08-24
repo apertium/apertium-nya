@@ -12,6 +12,7 @@ Alphabet
  %{T%}:t
  %{W%}:w 
  %{Z%}:z
+ %{NULL%}:0
  %>:0 ;
 
 Sets
@@ -68,6 +69,12 @@ i:0 <=> Vow %{VSUF%}:0 _ [ m | n ] ;
 
 "Turn {H} into 0 after %{A%}%>. aspirant followed by {H} in the plural"
 %{H%}:0 <=> %{A%}: %>: :Aspirant _ ;
+
+"Turn {A} into 0 before i. wina, ina, etc "
+%{A%}:0 <=> _ [ (%>: ) (%{NULL%}: ) ]* :i ;
+
+!"Turn {A} into 0 before i. wina, ina, etc Crashed! Core dumped! "
+!%{A%}:0 <=> _ %>: :i ;"
 
 ! "Turn {I} into 0 before a. caka, zaka. Conflict!"
 ! %{I%}:0 <=> _ %>: :a ;"
